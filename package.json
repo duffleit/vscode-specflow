@@ -11,13 +11,14 @@
 		"Languages"
 	],
 	"activationEvents": [
-		"onLanguage:feature"
+		"onLanguage:feature",
+		"onCommand:extension.aboutSpecflow"
 	],
 	"main": "./out/src/specflowMain",
 	"contributes": {
 		"commands": [{
-			"command": "extension.sayHello",
-			"title": "Hello World"
+			"command": "extension.aboutSpecflow",
+			"title": "About Specflow"
 		}]
 	},
 	"scripts": {

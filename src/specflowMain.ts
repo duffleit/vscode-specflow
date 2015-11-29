@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider(
 		SPECFLOWMODE, new SpecflowCompletionItemProvider(), '.'));
 
-	var disposable = vscode.commands.registerCommand('about Specflow', () => {
+	var disposable = vscode.commands.registerCommand('extension.aboutSpecflow', () => {
 		vscode.window.showInformationMessage('If you want to get more information about specflow visit us on specflow.org');
 	});
 		
