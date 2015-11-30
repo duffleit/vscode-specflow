@@ -38,7 +38,9 @@ interface Binding{
 
 function getBindings() : Binding[]{
 	return [
-		{currentFile: 'test/test.cs', labels: ['Given is a test', 'Given is a teest']}
+		{currentFile: 'bindings.cs', labels: ['Given is a test', 'Given is a teest']},
+		{currentFile: 'bindings.cs', labels: ['When it is a test']},
+		{currentFile: 'bindings.cs', labels: ['Then it must be a test']}
 	];
 }
 
