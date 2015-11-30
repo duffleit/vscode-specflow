@@ -17,6 +17,9 @@ export class SpecflowCompletionItemProvider implements vscode.CompletionItemProv
 			var sampleItem3 = new vscode.CompletionItem("Then the result should be <number> on the screen");
 			sampleItem3.kind = vscode.CompletionItemKind.Value;
 
+			var files = vscode.workspace.findFiles('**\*.cs', '**\node_modules\**', 10).then(uri => function(){
+				vscode.window.showWarningMessage(uri.toString());
+			});
 			resolve([sampleItem1, sampleItem2, sampleItem3]);
 		});
 	}
