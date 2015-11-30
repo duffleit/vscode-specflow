@@ -1,7 +1,7 @@
 # SpecFlow Visual Studio Code
 Adds [SpecFlow](http://www.specflow.org/) Integration to Visual Studio Code.
 
-![SpecFlow integration for VSCode](https://raw.githubusercontent.com/duffleit/vscode-specflow/master/documentation/vscode-specflow.gif)
+![SpecFlow integration for VSCode](https://raw.githubusercontent.com/duffleit/vscode-specflow/master/_docu/vscode-specflow.gif)
 
 *This extension is in development and may not be used at this time.*
 
