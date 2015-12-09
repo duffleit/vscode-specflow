@@ -1,26 +1,47 @@
 'use strict';
 import vscode = require('vscode');
+import fs = require('fs');
 
 export class SpecflowCompletionItemProvider implements vscode.CompletionItemProvider {
 	public provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): Promise<vscode.CompletionItem[]> {
-		return new Promise((resolve, reject) => {
-			var filename = document.fileName;
-			
-			var currentLine = document.lineAt(position);
-			
-			var sampleItem1 = new vscode.CompletionItem("Given I have entered <number> into the calculator");
-			sampleItem1.kind = vscode.CompletionItemKind.Value;
-			
-			var sampleItem2 = new vscode.CompletionItem("When I press add");
-			sampleItem2.kind = vscode.CompletionItemKind.Value;
-						
-			var sampleItem3 = new vscode.CompletionItem("Then the result should be <number> on the screen");
-			sampleItem3.kind = vscode.CompletionItemKind.Value;
-
-			var files = vscode.workspace.findFiles('**\*.cs', '**\node_modules\**', 10).then(uri => function(){
-				vscode.window.showWarningMessage(uri.toString());
-			});
-			resolve([sampleItem1, sampleItem2, sampleItem3]);
-		});
+		
+		var files = vscode.workspace.findFiles('**\*.cs',null, 200);
+		var specflowDriver = new SpecFlowDriver();
+				
+		return new Promise((resolve, reject) => resolve(
+			files.then(files => {
+				var allbindings = [].concat.apply([],files.map(file => {
+					var content = fs.readFileSync(file.fsPath,'utf8');
+					var bindings = specflowDriver.getBindings(content);
+					return bindings;
+				}));
+				
+				return allbindings.map(binding => {
+					var completionItem = new vscode.CompletionItem(binding);
+					completionItem.kind = vscode.CompletionItemKind.Value;
+					return completionItem;
+				});
+			}
+		)));
 	}
 }
+
+export class BindingCache{
+	
+}
+
+export class SpecFlowDriver{
+		
+	getBindings(content:string) : any{
+		var regex =  /\[Given\(@\"([^"]*)\"\)\]/g;	
+		return this.applyRegex(regex, content);
+	}
+	
+	applyRegex(regex: any, content: string){
+		var match = regex.exec(content);
+		if(match == null) return [];
+		return match.slice(1,2).concat(this.applyRegex(regex, content));
+	}
+}
+
+
