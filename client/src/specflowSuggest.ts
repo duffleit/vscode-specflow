@@ -1,3 +1,4 @@
+
 'use strict';
 import vscode = require('vscode');
 import fs = require('fs');
@@ -5,8 +6,9 @@ import fs = require('fs');
 export class SpecflowCompletionItemProvider implements vscode.CompletionItemProvider {
 	public provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): Promise<vscode.CompletionItem[]> {
 		
-		var files = vscode.workspace.findFiles('**\*.cs',null, 200);
 		var specflowDriver = new SpecFlowDriver();
+		
+
 				
 		return new Promise((resolve, reject) => resolve(
 			files.then(files => {
@@ -31,7 +33,35 @@ export class BindingCache{
 }
 
 export class SpecFlowDriver{
+	
+	private _bindings : any = null;
+	
+	public getBinding() : void{
 		
+		if(this._bindings == null){
+			var files = vscode.workspace.findFiles('**\*.cs', null, 2000);
+			var p =  new Promise((resolve, reject) => resolve(
+				files.then(files => {
+					var allbindings = [].concat.apply([],files.map(file => {
+						var content = fs.readFileSync(file.fsPath,'utf8');
+						var bindings = this.getBindings(content);
+						return bindings.map(b => new FileBinding(file.fsPath, b));
+					}));
+				}
+			)))
+			.then(v => 
+				this._bindings = v, e => this._bindings = null)
+			
+		}
+		else{
+			
+		}
+		
+
+	}
+	public match : string = '**\*.cs';
+	public antimatch : string = null;
+	
 	getBindings(content:string) : any{
 		var regex =  /\[Given\(@\"([^"]*)\"\)\]/g;	
 		return this.applyRegex(regex, content);
@@ -44,4 +74,12 @@ export class SpecFlowDriver{
 	}
 }
 
-
+export class FileBinding{
+	filename: string;
+	matching: string;
+	
+	constructor(filename : string, matching: string){
+		this.filename = filename;
+		this.matching = matching;
+	}
+}
