@@ -28,11 +28,11 @@
     "compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
   },
   "devDependencies": {
-    "line-number": "^0.1.0",
-    "typescript": "^1.6.2",
+    "typescript": "1.7.3",
     "vscode": "0.10.x"
   },
   "dependencies": {
-    "vscode-languageclient": "0.10.x"
+    "vscode-languageclient": "0.10.x",
+    "nedb": "^1.5.0"
   }
 }
