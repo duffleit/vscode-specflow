@@ -14,26 +14,25 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand("extension.aboutSpecflow", () => {});
 		return;
 	}
-	
-	console.log('extension "specflow" is active'); 
 
-	// SpecFlow Language Server
-	let serverModule = context.asAbsolutePath(path.join('server', 'server.js'));
-	// The debug options for the server
-	let debugOptions = { execArgv: ["--nolazy", "--debug=6004"] };
-	
-	let serverOptions: ServerOptions = {
-		run : { module: serverModule },
-		debug: { module: serverModule, options: debugOptions }
-	}
-	
-	let clientOptions: LanguageClientOptions = {
-		documentSelector: ['feature']
-	};
-	
-	let languageServer = new LanguageClient('Specflow Language Server', serverOptions, clientOptions).start();
+	console.log("extension 'specflow' is active");
 
-	console.log('"specflow" language server sucessful started'); 
+// 	// SpecFlow Language Server
+// 	let serverModule = context.asAbsolutePath(path.join("server", "server.js"));
+// 	// The debug options for the server
+// 	let debugOptions = { execArgv: ["--nolazy", "--debug=6004"] };
+// 		let serverOptions: ServerOptions = {
+// 		run : { module: serverModule },
+// 		debug: { module: serverModule, options: debugOptions }
+// 	};
+// 
+// 	let clientOptions: LanguageClientOptions = {
+// 		documentSelector: ["feature"]
+// 	};
+// 
+// 	let languageServer = new LanguageClient("Specflow Language Server", serverOptions, clientOptions).start();
+// 
+// 	console.log("'specflow' language server sucessful started");
 
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider(
 		SPECFLOWMODE, new SpecflowCompletionItemProvider(), "."));
@@ -41,8 +40,6 @@ export function activate(context: vscode.ExtensionContext) {
 	var aboutSpecflowCommand = vscode.commands.registerCommand("extension.aboutSpecflow", () => {
 		vscode.window.showInformationMessage("If you want to get more information about specflow visit us on specflow.org");
 	});
-	
-	context.subscriptions.push(languageServer);
 
 	// context.subscriptions.push(languageServer);
 	context.subscriptions.push(aboutSpecflowCommand);
