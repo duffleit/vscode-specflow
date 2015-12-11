@@ -1,4 +1,4 @@
-'use strict';
-import vscode = require('vscode');
+"use strict";
+import vscode = require("vscode");
 
-export const SPECFLOWMODE: vscode.DocumentFilter = { language: 'feature', scheme: 'file' }
+export const SPECFLOWMODE: vscode.DocumentFilter = { language: "feature", scheme: "file" };

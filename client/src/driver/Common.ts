@@ -1,5 +1,5 @@
-'use strict';
-import vscode = require('vscode');
+"use strict";
+import vscode = require("vscode");
 
 export interface Driver {
     suggestBindings() : Promise<vscode.CompletionItem[]>;
